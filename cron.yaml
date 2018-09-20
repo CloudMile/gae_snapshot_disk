@@ -1,0 +1,16 @@
+cron:
+- description: "Snapshot Your All Disks"
+  url: /cron/snapshot
+  schedule: every day 20:00 #UTC
+  target: snapshot
+
+# # [custom] you need chage <LABEL_KEY> and <LABEL_VALUE>
+# - description: "Snapshot Your Disks with labels <YOU_DEFINE>"
+#   url: "/cron/snapshot?filter=labels.<LABEL_KEY>%3A<LABEL_VALUE>"
+#   schedule: every day 21:00 #UTC
+#   target: snapshot
+
+- description: "Delete Your expired snapshots"
+  url: /cron/snapshot/delete
+  schedule: every day 20:30 #UTC
+  target: snapshot

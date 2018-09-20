@@ -1,0 +1,22 @@
+runtime: go
+api_version: go1
+
+env: standard
+service: snapshot
+threadsafe: false
+instance_class: F1
+handlers:
+  - url: /cron/snapshoting/.*
+    script: _go_app
+    login: admin
+
+  - url: /cron/deleteing/.*
+    script: _go_app
+    login: admin
+
+  - url: '/.*'
+    script: _go_app
+
+env_variables:
+  PROJECT_ID: "<YOUR_PROJECT_ID>" # only work for localhost test
+  DAYS_AGO: '7' # delete snapshots 7 days ago
