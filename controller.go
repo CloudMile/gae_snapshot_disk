@@ -9,13 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 	compute "google.golang.org/api/compute/v1"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/taskqueue"
-	"google.golang.org/appengine/urlfetch"
 )
 
 func snapashotHandle(w http.ResponseWriter, r *http.Request) {
@@ -41,11 +38,16 @@ func snapashotingHandle(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	filterParams := r.PostFormValue("filter")
 	log.Infof(ctx, "filter: %v", filterParams)
+	cs := ComputeService{Ctx: ctx}
+	cs.Get()
+	if cs.Error != nil {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
 
-	computeService := getComputeService(ctx)
-	gceZoneList := getGCEZone(ctx, computeService)
-	gceDiksMap := rangeDiskZone(ctx, computeService, gceZoneList, filterParams)
-	rangeCreateSnapshot(ctx, computeService, gceDiksMap)
+	gceZoneList := getGCEZone(ctx, cs.ComputeService)
+	gceDiksMap := rangeDiskZone(ctx, cs.ComputeService, gceZoneList, filterParams)
+	rangeCreateSnapshot(ctx, cs.ComputeService, gceDiksMap)
 }
 
 func snapashotDeleteHandle(w http.ResponseWriter, r *http.Request) {
@@ -69,9 +71,14 @@ func deleteingHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ctx := appengine.NewContext(r)
-	computeService := getComputeService(ctx)
-	gceSnapashotsList := rangeCanDeleteSnapshotsProject(ctx, computeService)
-	rangeSnapshotsDelete(ctx, computeService, gceSnapashotsList)
+	cs := ComputeService{Ctx: ctx}
+	cs.Get()
+	if cs.Error != nil {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	gceSnapashotsList := rangeCanDeleteSnapshotsProject(ctx, cs.ComputeService)
+	rangeSnapshotsDelete(ctx, cs.ComputeService, gceSnapashotsList)
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
@@ -84,22 +91,6 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	default:
 		fmt.Fprint(w, "Bad Request")
 	}
-}
-
-func getComputeService(ctx context.Context) (computeService *compute.Service) {
-	client := &http.Client{
-		Transport: &oauth2.Transport{
-			Source: google.AppEngineTokenSource(ctx, compute.ComputeScope),
-			Base: &urlfetch.Transport{
-				Context: ctx,
-			},
-		},
-	}
-	computeService, err := compute.New(client)
-	if err != nil {
-		log.Errorf(ctx, "compute error: %s", err)
-	}
-	return
 }
 
 func getGCEZone(ctx context.Context, computeService *compute.Service) (gceZoneList []string) {
