@@ -20,7 +20,7 @@ Go to the project ditrctory.
 $ cd ./gae_snapshot_disk
 ```
 
-You have to setup below configurations first:
+You have to setup below configurations first (in folder `app`):
 - `app.yaml`: main application deployment setting
 - `cron.yaml`: cron job setting
 - `queue.yaml`: job queue setting
@@ -28,7 +28,7 @@ You have to setup below configurations first:
 Edit `app.yaml`
 
 ```shell
-$ vim app.yaml
+$ vim ./app/app.yaml
 ```
 
 ```yaml
@@ -44,7 +44,7 @@ env_variables:
 Edit `cron.yaml`
 
 ```shell
-$ vim cron.yaml
+$ vim ./app/cron.yaml
 ```
 
 ```yaml
@@ -59,7 +59,7 @@ For the disk which set the label `expired_can_delete:yes`; this service will del
 
 Edit `queue.yaml`
 ```shell
-$ vim queue.yaml
+$ vim ./app/queue.yaml
 ```
 
 ```yaml
@@ -76,7 +76,7 @@ $ gcloud config set project <YOUR_PROJECT_ID>
 Replace `<YOUR_PROJECT_ID>` to your project id
 
 ```shell
-$ gcloud app deploy app.yaml cron.yaml queue.yaml
+$ gcloud app deploy app/app.yaml app/cron.yaml app/queue.yaml
 ```
 
 ## Test
