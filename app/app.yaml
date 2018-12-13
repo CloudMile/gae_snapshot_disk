@@ -1,21 +1,19 @@
-runtime: go
-api_version: go1
+runtime: go111
 
 env: standard
 service: snapshot
-threadsafe: false
 instance_class: F1
 handlers:
   - url: /cron/snapshoting/.*
-    script: _go_app
+    script: auto
     login: admin
 
   - url: /cron/deleteing/.*
-    script: _go_app
+    script: auto
     login: admin
 
   - url: '/.*'
-    script: _go_app
+    script: auto
 
 env_variables:
   PROJECT_ID: "<YOUR_PROJECT_ID>" # only work for localhost test
