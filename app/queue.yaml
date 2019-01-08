@@ -1,11 +1,11 @@
 queue:
 - name: create-snapshot
   rate: 5/s
-  target: snapshot
+  target: default
 
 - name: delete-snapshot
   rate: 5/s
-  target: snapshot
+  target: default
 
 # - name: qull-example
 #   mode: pull
