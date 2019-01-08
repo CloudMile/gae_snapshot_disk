@@ -13,9 +13,19 @@ Follow [here](https://cloud.google.com/sdk/install) to install gcloud SDK.
 Follow [here](https://console.cloud.google.com/projectselector/appengine/create?lang=go&st=true) to select/create a GCP project.
 
 ## Setup
+### A Easy Way
+```shell
+$ make set PROJECT=<YOUR_PROJECT_ID>
+```
+where `<YOUR_PROJECT_ID>` is your project id
 
+```shell
+$ make yaml SERVICE=<YOUR_SERVICE_NAME>
+```
+where `<YOUR_SERVICE_NAME>` is sericve name you want, HOWEVER, the first GAE service name MUST be `default`
+
+### More Info
 Go to the project ditrctory.
-
 ```shell
 $ cd ./gae_snapshot_disk
 ```
