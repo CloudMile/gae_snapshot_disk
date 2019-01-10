@@ -18,3 +18,7 @@ handlers:
 env_variables:
   PROJECT_ID: "<YOUR_PROJECT_ID>" # only work for localhost test
   DAYS_AGO: '7' # delete snapshots 7 days ago
+  # Storage location, either regional (`asia-east1`) or multi-regional (`asia`), where snapshot content is to be stored.
+  # If set `none`, a nearby regional or multi-regional location is chosen automatically.
+  # Also if you don't want to store out-side from TW, please change to `asia-east1`
+  STORAGE_LOCATION: 'none'
