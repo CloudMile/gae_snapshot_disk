@@ -46,10 +46,12 @@ service: snapshot
 env_variables:
   PROJECT_ID: "<YOUR_PROJECT_ID>" # only work for localhost test
   DAYS_AGO: '7' # delete snapshots 7 days ago
+  STORAGE_LOCATION: 'none'
 ```
 - service, if this is your first GAE service, please replcase `snapshot` to `default`
 - PROJECT_ID, GCP project, it's only work on local
 - DAYS_AGO, how many days ago, the snapshots will be deleted.
+- STORAGE_LOCATION, Storage location, either regional (`asia-east1`) or multi-regional (`asia`), where snapshot content is to be stored. If set `none`, a nearby regional or multi-regional location is chosen automatically. Also if you don't want to store out-side from TW, please change to `asia-east1`
 
 Edit `cron.yaml`
 
