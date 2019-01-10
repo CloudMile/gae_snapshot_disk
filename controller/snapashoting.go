@@ -3,11 +3,12 @@ package controller
 import (
 	"context"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
 	"github.com/CloudMile/gae_snapshot_gce_disk/model"
-	compute "google.golang.org/api/compute/v1"
+	compute "google.golang.org/api/compute/v0.beta"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
 )
@@ -45,6 +46,10 @@ func rangeCreateSnapshot(ctx context.Context, computeService *compute.Service, g
 				Name:   diskName + `-` + tString,
 				Labels: disk.Labels,
 			}
+			if os.Getenv("STORAGE_LOCATION") != "none" {
+				rb.StorageLocations = []string{os.Getenv("STORAGE_LOCATION")}
+			}
+
 			log.Infof(ctx, "create snapshot: %s => %s", zoneName, diskName)
 			_, err := computeService.Disks.CreateSnapshot(projectID, zoneName, diskName, rb).Context(ctx).Do()
 			if err != nil {
