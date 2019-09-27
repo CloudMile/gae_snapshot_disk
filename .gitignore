@@ -13,3 +13,6 @@
 
 # sed files
 *.yamlt
+
+# for dev
+.app.yaml
