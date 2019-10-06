@@ -6,7 +6,7 @@ import (
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	compute "google.golang.org/api/compute/v0.beta"
+	compute "google.golang.org/api/compute/v1"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/urlfetch"
 )
