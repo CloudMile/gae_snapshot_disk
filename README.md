@@ -1,6 +1,8 @@
 # gae_snapshot_disk
 Snapshot GCE Instance Disks with GAE Cron Job and Delete Expired Snapashots
 
+Instead of deploy this gae application, now you can [Creating scheduled snapshots for persistent disk](Creating scheduled snapshots for persistent disk) on GCP Cloud Console.
+
 ## Get Source Code
 ```shell
 $ git clone git@github.com:CloudMile/gae_snapshot_disk.git
