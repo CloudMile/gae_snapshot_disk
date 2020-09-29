@@ -1,7 +1,7 @@
 # gae_snapshot_disk
 Snapshot GCE Instance Disks with GAE Cron Job and Delete Expired Snapashots
 
-Instead of deploy this gae application, now you can [Creating scheduled snapshots for persistent disk](Creating scheduled snapshots for persistent disk) on GCP Cloud Console.
+ℹ️ Instead of deploy this gae application, now you can [Creating scheduled snapshots for persistent disk](https://cloud.google.com/compute/docs/disks/scheduled-snapshots) on GCP Cloud Console.
 
 ## Get Source Code
 ```shell
@@ -50,10 +50,10 @@ env_variables:
   DAYS_AGO: '7' # delete snapshots 7 days ago
   STORAGE_LOCATION: 'none'
 ```
-- service, if this is your first GAE service, please replcase `snapshot` to `default`
-- PROJECT_ID, GCP project, it's only work on local
-- DAYS_AGO, how many days ago, the snapshots will be deleted.
-- STORAGE_LOCATION, Storage location, either regional (`asia-east1`) or multi-regional (`asia`), where snapshot content is to be stored. If set `none`, a nearby regional or multi-regional location is chosen automatically. Also if you don't want to store out-side from TW, please change to `asia-east1`
+- `service`: If this is your first GAE service, please replcase `snapshot` to `default`
+- `PROJECT_ID`: GCP project, it's only work on local
+- `DAYS_AGO`: How many days ago, the snapshots will be deleted.
+- `STORAGE_LOCATION`: Storage location, either regional (`asia-east1`) or multi-regional (`asia`), where snapshot content is to be stored. If set `none`, a nearby regional or multi-regional location is chosen automatically. Also if you don't want to store out-side from TW, please change to `asia-east1`
 
 Edit `cron.yaml`
 
@@ -79,7 +79,7 @@ $ vim ./app/queue.yaml
 ```yaml
 target: snapshot
 ```
-- target, if this is your first GAE service, please change replace `snapshot` to `default`
+- `target`: if this is your first GAE service, please change replace `snapshot` to `default`
 
 ## Deploy
 
